@@ -169,6 +169,8 @@ Reset links to optimize for opt-in styling instead of opt-out.
 a {
   color: inherit;
   text-decoration: inherit;
+  display:flex;
+  font-weight:bold;
 }
 
 /*
@@ -745,6 +747,7 @@ html {
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
+  margin-top:10px;
 }
 
 ::backdrop {
