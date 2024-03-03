@@ -1,0 +1,24 @@
+{
+  "name": "webassignment2",
+  "version": "1.0.0",
+  "description": "assignment",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "tw:build": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/main.css"
+  },
+  "author": "Muhammad Masood Azhar",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "autoprefixer": "^10.4.17",
+    "daisyui": "^4.6.2",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/main.css" rel="stylesheet">
+  <title class="ml-30 text-5xl font-bold">Lego Collection</title>
+  
+</head>
+<body class="bg-gray-100">
+    
+  <%- include('partials/_navbar') %>
+  
+  <div class="container mx-auto px-4">
+    <div class="hero bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Welcome to the Lego Collection!</h1>
+          <p class="py-6">Ready to explore the world of Lego? Discover sets from various themes and find your next build right here.</p>
+          <a href="/lego/sets" class="btn btn-primary">Explore Sets</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+    
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            
+
+            <div class="card rounded overflow-hidden shadow-lg">
+                <div class="px-6 pt-4 pb-2">
+                    <a href="/lego/sets/0011-2" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      View Set
+                    </a>
+                  </div>
+                <img class="w-full" src="https://cdn.rebrickable.com/media/sets/0011-2.jpg" class="w-20 h-20 object-cover object-center" alt="Town Mini-Figures">
+                <div class="px-6 py-4">
+                  <div class="font-bold text-xl mb-2">Town Mini-Figures</div>
+                  <p class="text-gray-700 text-base">
+                    The 'Town Mini-Figures' set features a variety of small Lego people designed to populate your Lego town. It includes figures like a baker, a mail carrier, and more, allowing for creative play in a Lego city setting. This set is great for adding life and stories to your Lego creations.
+                  </p>
+                </div>
+                
+              </div>
+          
+          <div class="card rounded overflow-hidden shadow-lg">
+            <div class="px-6 pt-4 pb-2">
+                <a href="/lego/sets/0011-3" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  View Set
+                </a>
+              </div>
+            <img class="w-full" src="https://cdn.rebrickable.com/media/sets/0011-3.jpg" class="w-20 h-20 object-cover object-center" alt="Lion Knights">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">Lion Knights</div>
+              <p class="text-gray-700 text-base">
+                The 'Lion Knights' set transports you to a medieval world filled with bravery and battles. It includes knights in detailed armor, ready to defend their castle. Perfect for imaginative play, this set allows you to create epic adventures and stories of valor.
+              </p>
+            </div>
+            
+          </div>
+
+          <div class="card rounded overflow-hidden shadow-lg">
+            <div class="px-6 pt-4 pb-2">
+                <a href="/lego/sets/0012-1" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  View Set
+                </a>
+              </div>
+            <img class="w-full" src="https://cdn.rebrickable.com/media/sets/0012-1.jpg" alt="Space Mini-Figures">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">Space Mini-Figures</div>
+              <p class="text-gray-700 text-base">
+                The 'Space Mini-Figures' set takes you on an interstellar adventure with astronauts and alien figures. It's perfect for creating space-themed stories and exploring the universe with your Lego builds. This set brings outer space right into your home, encouraging imaginative space missions and adventures.
+              </p>
+            </div>
+            
+          </div>
+
+
+        </div>
+      
+  
+    <!-- Footer -->
+    <footer class="bg-gray-800 p-4 text-white text-center">
+      <p>Made with love by Lego Enthusiasts.</p>
+    </footer>
+    <script>
+        document.getElementById('themeButton').onclick = function() {
+          var dropdown = document.getElementById('themeDropdown');
+          dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        };
+      </script>
+  </body>
+
+</html>
