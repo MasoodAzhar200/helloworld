@@ -1,88 +1,136 @@
+require('dotenv').config();
 const setData = require("../data/setData");
 const themeData = require("../data/themeData");
+
+const Sequelize = require('sequelize');
+
+
+let sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: 'postgres',
+  logging: false, 
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false 
+    }
+  }
+});
+
+const Theme = sequelize.define('Theme', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  name: Sequelize.STRING
+}, { timestamps: false });
+
+const Set = sequelize.define('Set', {
+  set_num: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  name: Sequelize.STRING,
+  year: Sequelize.INTEGER,
+  theme_id: {
+    type: Sequelize.INTEGER,
+  },
+  num_parts: Sequelize.INTEGER,
+  img_url: Sequelize.STRING
+}, { timestamps: false });
+
+Set.belongsTo(Theme, {foreignKey: 'theme_id'});
 
 
 let sets = [];
 
+const validatedSets = setData.filter(set => {
+  
+  const themeExists = themeData.some(theme => theme.id === set.theme_id);
+  return themeExists; 
+});
+
 function initialize() {
-    return new Promise((resolve, reject) => {
-      try {
-        sets = setData.map(row => {
-          const [setNum, setInfo] = Object.entries(row)[0];
-          const [set_num,name, year, themeId, numParts, imgUrl] = setInfo.split(",");
-          const themeObject = themeData.find(themeObj => themeObj.id === themeId);
-          return {
-            set_num,
-            name,
-            year,
-            theme_id: themeId,
-            num_parts: numParts,
-            img_url: imgUrl,
-            theme: themeObject ? themeObject.name : "Unknown Theme"
-          };
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+  return sequelize.sync().then(() => {
+    console.log('Database synced');
+  }).catch((err) => {
+    console.error('Error syncing database: ', err);
+  });
+}
 
-  function getAllSets() {
-    return new Promise((resolve, reject) => {
-      try {
-        if (sets.length > 0) {
-          resolve(sets);
-        } else {
-          reject("No sets available. Please run initialize() first.");
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
 
-  function getSetByNum(setNum) {
-    return new Promise((resolve, reject) => {
-      try {
-        const foundSet = sets.find(set => set.set_num === setNum);
-        if (foundSet) {
-          resolve(foundSet);
-        } else {
-          reject("Unable to find requested set.");
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+function getAllSets() {
+  return Set.findAll({
+    include: [Theme]
+  });
+}
 
-  function getSetsByTheme(theme) {
-    return new Promise((resolve, reject) => {
-      try {
-        const lowercaseTheme = theme.toLowerCase();
-        const foundSets = sets.filter(set =>
-          set.theme.toLowerCase().includes(lowercaseTheme)
-        );
-        if (foundSets.length > 0) {
-          resolve(foundSets);
-        } else {
-          reject("Unable to find requested sets.");
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
+
+
+function getSetByNum(setNum) {
+  return Set.findOne({
+    where: { set_num: setNum },
+    include: [Theme]
+  });
+}
+
+function getSetsByTheme(theme) {
+  return Set.findAll({
+    include: [{
+      model: Theme,
+      where: { name: { [Sequelize.Op.iLike]: `%${theme}%` } }
+    }]
+  });
+}
+
+  const validSetData = setData.filter(set => set.set_num != null && set.set_num.trim() !== '');
+
+
+  // Get all themes
+function getAllThemes() {
+  return Theme.findAll();
+}
+
+// Add a new set
+function addSet(setData) {
+  return Set.create(setData);
+}
+
+async function editSet(set_num, setData) {
+  const set = await Set.findOne({ where: { set_num: set_num } });
+  if (set) {
+    return set.update(setData);
+  } else {
+    throw new Error('Set not found');
   }
+}
+
+function deleteSet(set_num) {
+  return new Promise((resolve, reject) => {
+    Set.destroy({
+      where: { set_num: set_num }
+    })
+    .then(() => resolve())
+    .catch(err => reject(err));
+  });
+}
 
 module.exports = {
   initialize,
   getAllSets,
   getSetByNum,
-  getSetsByTheme
+  getSetsByTheme,
+  getAllThemes,
+  addSet,
+  editSet,
+  deleteSet
 };
 
 const legoSets = require("../modules/legoSets");
+
+
+
 
 legoSets.initialize()
   .then(() => legoSets.getAllSets())
@@ -100,4 +148,7 @@ legoSets.initialize()
   .catch(error => {
     console.error("Error:", error);
   });
+
+  
+
 

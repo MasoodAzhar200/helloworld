@@ -20,6 +20,30 @@
   /* 2 */
 }
 
+.fancy-button {
+  background-color: red; /* Red background */
+  color: white; /* White text */
+  font-weight: bold; /* Bold text */
+  padding: 8px 16px; /* Top and bottom padding 8px, left and right padding 16px */
+  border-radius: 9999px; /* Fully rounded borders */
+  border: none; /* No border */
+  cursor: pointer; /* Cursor changes to a pointer to indicate it's clickable */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.fancy-button:hover {
+  background-color: darkred; /* Darker red background on hover */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input{
+  margin-bottom: 10px; /* Space between form elements */
+}
+
 .centered-image {
   display: block;
   margin-left: auto;
@@ -252,7 +276,7 @@ table {
 3. Remove default padding in all browsers.
 */
 
-button,
+
 input,
 optgroup,
 select,
@@ -269,12 +293,15 @@ textarea {
   /* 1 */
   line-height: inherit;
   /* 1 */
-  color: inherit;
+  /*color: inherit;*/ 
   /* 1 */
   margin: 0;
   /* 2 */
   padding: 0;
   /* 3 */
+  background-color: white;
+  color: black;
+
 }
 
 /*
@@ -297,7 +324,7 @@ button,
 [type='submit'] {
   -webkit-appearance: button;
   /* 1 */
-  background-color: transparent;
+  background-color: red;
   /* 2 */
   background-image: none;
   /* 2 */
@@ -395,6 +422,7 @@ p,
 pre {
   margin: 10px;
   font-style: oblique;
+  font-weight:bold;
 }
 
 fieldset {
