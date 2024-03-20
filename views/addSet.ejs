@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"ADD Set"</title>
+    <link href="/css/main.css" rel="stylesheet">
+    
+</head>
+<body>
+    <h1>Add Set</h1>
+    <form action="/lego/addSet" method="POST" class="form-container">
+      <input type="text" name="name" required placeholder="Set Name" />
+      <input type="number" name="year" required placeholder="Year" />
+      <input type="number" name="num_parts" required placeholder="Number of Parts" />
+      <input type="url" name="img_url" required placeholder="Image URL" />
+      <select name="theme_id" required>
+        <% themes.forEach(theme => { %>
+          <option value="<%= theme.id %>"><%= theme.name %></option>
+        <% }); %>
+      </select>
+      <input type="text" name="set_num" required placeholder="Set Number" />
+      <button type="submit" class="fancy-button">Add Set</button>
+    </form>
+</body>
+</html>
